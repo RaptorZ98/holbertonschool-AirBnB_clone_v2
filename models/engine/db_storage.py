@@ -38,7 +38,7 @@ class DBStorage:
                   }
         dic = {}
         if cls is not None:
-            for obj in self.__session.query(cls).all():
+            for obj in self.__session.query(classes[cls]).all():
                 dic[f"{obj.__class__.__name__}.{obj.id}"] = obj
         else:
             for clas in classes.values():

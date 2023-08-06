@@ -3,7 +3,6 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from models import storage
 import os
 STORE = os.getenv('HBNB_TYPE_STORAGE')
 
@@ -18,10 +17,13 @@ class State(BaseModel, Base):
                               backref='state', cascade='all, delete-orphan')
 
     else:
+        name = ""
+
         @property
         def cities(self):
             """ gets cities """
             from models.city import City
+            from models import storage
             di = storage.all(City).values()
             new_di = []
             for obj in di:

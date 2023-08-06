@@ -2,7 +2,6 @@
 """ City Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from state import State
 from sqlalchemy.orm import relationship
 import os
 STORE = os.getenv('HBNB_TYPE_STORAGE')
