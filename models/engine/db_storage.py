@@ -23,7 +23,9 @@ class DBStorage:
     __session: None
 
     def __init__(self):
-        self.__engine = create_engine(f"mysql+mysqldb://{USER}:{PASS}@{HOST}/{DATA}", pool_pre_ping=True)
+        self.__engine =\
+            create_engine(f"mysql+mysqldb://{USER}:{PASS}@{HOST}/{DATA}",
+                          pool_pre_ping=True)
         if ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
