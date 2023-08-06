@@ -6,7 +6,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
 Store = os.getenv('HBNB_TYPE_STORAGE')
 
 
-class Review(BaseModel):
+class Review(BaseModel, Base):
     """ Review classto store review information """
     if Store == 'db':
         __tablename__ = 'reviews'
