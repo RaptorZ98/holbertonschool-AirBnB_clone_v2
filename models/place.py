@@ -2,9 +2,22 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 import os
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
+from models.review import Review
+from models.amenity import Amenity
 STORE = os.getenv('HBNB_TYPE_STORAGE')
+
+
+if STORE == 'db':
+    metadata = Base.metadata
+    place_amenity = Table('place_amenity', metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True))
 
 
 class Place(BaseModel, Base):
@@ -23,7 +36,9 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=False)
         amenity_ids = []
         reviews = relationship('Review', backref='place',
-                               cascade='all, delete-orphan')
+                               cascade='all, delete, delete-orphan')
+        amenities = relationship('Amenity', secondary='place_amenity',
+                                 backref='places', viewonly=False)
 
     else:
         city_id = ""
@@ -37,3 +52,21 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            """ returns reviews """
+            lis = []
+            for rev in Review.all():
+                if rev.place_id == self.id:
+                    lis.append(rev)
+            return lis
+
+        @property
+        def amenities(self):
+            """ returns amenities """
+            lis = []
+            for ame in Amenity.all():
+                if ame.place_id == self.id:
+                    lis.append(ame)
+            return lis
