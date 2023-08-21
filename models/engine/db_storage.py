@@ -67,3 +67,7 @@ class DBStorage:
         if obj is not None:
             self.__session.delete(obj)
             self.save()
+
+    def close(self):
+        """ deserialize the JSON file """
+        self.__session.remove()
