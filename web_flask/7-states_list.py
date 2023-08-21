@@ -16,7 +16,7 @@ def lists():
 
 @app.teardown_appcontext
 def close(exception=None):
-    storage.close
+    storage.close()
 
 
 if __name__ == "__main__":
