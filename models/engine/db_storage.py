@@ -19,8 +19,8 @@ ENV = os.getenv('HBNB_ENV')
 
 class DBStorage:
     """ db storage """
-    __engine: None
-    __session: None
+    __engine = None
+    __session = None
 
     def __init__(self):
         self.__engine =\
